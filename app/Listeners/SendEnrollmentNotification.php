@@ -7,7 +7,7 @@ use App\Notifications\NewStudentEnrolled;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SendEnrollmentNotification
+class SendEnrollmentNotification implements ShouldQueue
 {
     /**
      * Create the event listener.
