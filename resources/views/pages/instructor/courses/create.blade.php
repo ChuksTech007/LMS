@@ -9,8 +9,8 @@
 				<div class="p-6 text-gray-900">
 					<h2 class="text-2xl font-semibold mb-6">Tambah Kursus Baru</h2>
 
-					{{-- Form will point to the store route --}}
-					<form action="{{ route('courses.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+					<form action="{{ route('instructor.courses.store') }}" method="POST" enctype="multipart/form-data"
+						class="space-y-6">
 						@csrf
 						@include('pages.instructor.courses.partials._form')
 					</form>

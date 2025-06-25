@@ -70,6 +70,9 @@
 			Ganti Gambar
 		</button>
 	</div>
+	@error('thumbnail')
+		<p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+	@enderror
 </div>
 
 <div class="flex justify-end pt-6">

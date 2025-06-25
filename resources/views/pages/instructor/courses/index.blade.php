@@ -23,7 +23,7 @@
 			@endif
 			<div class="flex justify-between items-center mb-6">
 				<h2 class="text-2xl font-semibold text-gray-900">Kursus Saya</h2>
-				<a href="{{ route('courses.create') }}"
+				<a href="{{ route('instructor.courses.create') }}"
 					class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">
 					Tambah Kursus Baru
 				</a>
@@ -69,10 +69,12 @@
 												</td>
 												<td
 													class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-													<a href="{{ route('courses.edit', $course) }}"
-														class="text-indigo-600 hover:text-indigo-900">Edit</a>
-													<form action="{{ route('courses.destroy', $course) }}" method="POST"
-														class="inline-block ml-4"
+													<a href="{{ route('instructor.courses.lessons.index', $course) }}"
+														class="text-green-600 hover:text-green-900">Kurikulum</a>
+													<a href="{{ route('instructor.courses.edit', $course) }}"
+														class="text-indigo-600 hover:text-indigo-900 ml-4">Edit</a>
+													<form action="{{ route('instructor.courses.destroy', $course) }}"
+														method="POST" class="inline-block ml-4"
 														onsubmit="return confirm('Apakah Anda yakin ingin menghapus kursus ini?');">
 														@csrf
 														@method('DELETE')

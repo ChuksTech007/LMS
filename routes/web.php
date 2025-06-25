@@ -3,19 +3,26 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\Instructor\LessonController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pages.home');
 });
 
-Route::middleware(['auth', 'role:instructor'])->group(function () {
-    Route::get('/instructor/dashboard', function () {
-        return view('pages.dashboard');
-    })->name('dashboard'); // Pindahkan dashboard ke sini
+Route::middleware(['auth', 'role:instructor'])
+    ->prefix('instructor')
+    ->name('instructor.')
+    ->group(function () {
 
-    Route::resource('/instructor/courses', CourseController::class);
-});
+        Route::get('/dashboard', function () {
+            return view('pages.dashboard');
+        })->name('dashboard');
+
+        Route::resource('courses', CourseController::class);
+
+        Route::resource('courses.lessons', LessonController::class)->scoped();
+    });
 
 // Routes for Registration
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');

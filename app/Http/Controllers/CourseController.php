@@ -42,7 +42,7 @@ class CourseController extends Controller
 
         auth()->user()->courses()->create($validated);
 
-        return redirect()->route('courses.index')->with('success', 'Kursus berhasil dibuat!');
+        return redirect()->route('instructor.courses.index')->with('success', 'Kursus berhasil dibuat!');
     }
 
     /**
@@ -72,7 +72,7 @@ class CourseController extends Controller
 
         $course->update($validated);
 
-        return redirect()->route('courses.index')->with('success', 'Kursus berhasil diperbarui!');
+        return redirect()->route('instructor.courses.index')->with('success', 'Kursus berhasil diperbarui!');
     }
 
     /**
@@ -86,6 +86,6 @@ class CourseController extends Controller
 
         $course->delete();
 
-        return redirect()->route('courses.index')->with('success', 'Kursus berhasil dihapus!');
+        return redirect()->route('instructor.courses.index')->with('success', 'Kursus berhasil dihapus!');
     }
 }

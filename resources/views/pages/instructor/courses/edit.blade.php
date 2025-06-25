@@ -9,11 +9,10 @@
 				<div class="p-6 text-gray-900">
 					<h2 class="text-2xl font-semibold mb-6">Edit Kursus: {{ $course->title }}</h2>
 
-					{{-- Form will point to the update route --}}
-					<form action="{{ route('courses.store') }}" method="POST" enctype="multipart/form-data"
-						class="space-y-6">
+					<form action="{{ route('instructor.courses.update', $course) }}" method="POST"
+						enctype="multipart/form-data" class="space-y-6">
 						@csrf
-						@method('PUT') {{-- Important for update action --}}
+						@method('PUT')
 						@include('pages.instructor.courses.partials._form')
 					</form>
 				</div>
