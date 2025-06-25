@@ -54,7 +54,7 @@ class NewStudentEnrolled extends Notification
         return [
             'message' => "Siswa baru, {$this->student->name}, telah mendaftar di kursus Anda: {$this->course->title}.",
             'course_id' => $this->course->id,
-            'course_slug' => $this->course->slug,
+            'url' => route('instructor.courses.lessons.index', ['course' => $this->course->id]),
         ];
     }
 }

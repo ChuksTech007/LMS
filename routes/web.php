@@ -6,6 +6,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\Instructor\LessonController;
 use App\Http\Controllers\LearningController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,9 @@ Route::middleware(['auth', 'enrolled'])->group(function () {
 
     Route::post('/learn/courses/{course}/lessons/{lesson}/complete', [LearningController::class, 'completeLesson'])->name('learning.complete');
 });
+
+Route::get('/notifications/{notification}', [NotificationController::class, 'read'])
+    ->middleware('auth')->name('notifications.read');
 
 Route::middleware(['auth', 'role:instructor'])
     ->prefix('instructor')
