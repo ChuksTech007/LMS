@@ -17,11 +17,9 @@ class EnsureUserHasRole
     {
         // Check if user's role is not in the list of allowed roles.
         if (!$request->user() || !in_array($request->user()->role->value, $roles)) {
-            // If not, stop the request and show a 'Forbidden' error page.
             abort(403, 'UNAUTHORIZED ACTION.');
         }
 
-        // If the user has the required role, allow the request to proceed.
         return $next($request);
     }
 }
