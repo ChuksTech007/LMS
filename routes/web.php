@@ -10,7 +10,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('pages.dashboard');
-})->middleware('auth')->name('dashboard');
+})->middleware('auth', 'role:instructor')->name('dashboard');
 
 // Routes for Registration
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
