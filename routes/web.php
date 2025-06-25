@@ -23,6 +23,8 @@ Route::post('/courses/{course}/enroll', [EnrollmentController::class, 'store'])
 
 Route::middleware(['auth', 'enrolled'])->group(function () {
     Route::get('/learn/courses/{course}/lessons/{lesson}', [LearningController::class, 'showLesson'])->name('learning.lesson');
+
+    Route::post('/learn/courses/{course}/lessons/{lesson}/complete', [LearningController::class, 'completeLesson'])->name('learning.complete');
 });
 
 Route::middleware(['auth', 'role:instructor'])
