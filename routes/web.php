@@ -4,11 +4,16 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\Instructor\LessonController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pages.home');
 });
+
+// Public Course Routes
+Route::get('/courses', [PageController::class, 'courseIndex'])->name('courses.index');
+Route::get('/courses/{course:slug}', [PageController::class, 'courseShow'])->name('courses.show');
 
 Route::middleware(['auth', 'role:instructor'])
     ->prefix('instructor')

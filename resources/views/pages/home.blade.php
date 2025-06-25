@@ -21,8 +21,8 @@
 							class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
 							Mulai Belajar
 						</a>
-						<a href="#" class="text-sm font-semibold leading-6 text-gray-900">Lihat Katalog <span
-								aria-hidden="true">→</span></a>
+						<a href="{{ route('courses.index') }}" class="text-sm font-semibold leading-6 text-gray-900">Lihat
+							Katalog <span aria-hidden="true">→</span></a>
 					</div>
 				</div>
 			</div>
