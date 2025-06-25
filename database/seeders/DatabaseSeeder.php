@@ -17,17 +17,18 @@ class DatabaseSeeder extends Seeder
     {
         // Create 1 Admin
         User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin'),
-            'role' => Role::INSTRUCTOR,
+            'name' => 'Admin User',
+            'email' => 'admin@skoolio.test',
+            'password' => Hash::make('password'),
+            'role' => Role::ADMIN,
         ]);
 
+        // Create 1 Instructor
         User::factory()->create([
-            'name' => 'Student',
-            'email' => 'student@gmail.com',
-            'password' => Hash::make('student'),
-            'role' => Role::STUDENT,
+            'name' => 'Instructor User',
+            'email' => 'instructor@skoolio.test',
+            'password' => Hash::make('password'),
+            'role' => Role::INSTRUCTOR,
         ]);
 
         // Create 3 Instructors

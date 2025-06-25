@@ -1,61 +1,165 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Skoolio - Learning Management System (LMS)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![PHP](https://img.shields.io/badge/PHP-8.3%2B-777BB4?style=for-the-badge&logo=php)
+![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel)
+![Testing](https://img.shields.io/badge/Testing-Pest-C5A13A?style=for-the-badge&logo=pest)
+![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)
 
-## About Laravel
+Skoolio adalah sebuah prototipe Learning Management System (LMS) fungsional yang dibangun sepenuhnya menggunakan Laravel 12. Proyek ini dibuat dari nol dengan tujuan untuk menjelajahi fitur-fitur inti dan lanjutan dari framework Laravel secara mendalam, dengan fokus pada praktik terbaik dan alur kerja modern.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+![Skoolio Screenshot Placeholder](https://i.imgur.com/TTOD7Yn.jpeg)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🚀 About The Project
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Proyek ini mensimulasikan platform e-learning di mana pengajar (instructors) dapat membuat dan mengelola kursus serta pelajaran, dan siswa (students) dapat mendaftar, belajar, dan melacak kemajuan mereka.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Tujuan utamanya adalah untuk mendemonstrasikan implementasi dari berbagai konsep Laravel dalam satu aplikasi yang kohesif, termasuk:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-   Otentikasi manual dari dasar.
+-   Sistem peran dan otorisasi yang fleksibel.
+-   Manajemen sumber daya yang bersarang (Nested Resources).
+-   Proses latar belakang menggunakan Queues dan Scheduled Tasks.
+-   Pengujian otomatis untuk memastikan keandalan aplikasi.
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## ✨ Key Features
 
-### Premium Partners
+-   ✅ **Manual Authentication:** Sistem registrasi, login, dan logout yang dibuat dari nol.
+-   ✅ **Role-Based Access Control (RBAC):** Tiga peran (Student, Instructor, Admin) dilindungi oleh Middleware kustom.
+-   ✅ **Ownership Authorization:** Laravel Policies memastikan instruktur hanya bisa mengelola konten miliknya.
+-   ✅ **Course & Lesson Management:** Fungsionalitas CRUD penuh untuk instruktur mengelola kursus dan pelajaran.
+-   ✅ **Interactive File Uploads:** Komponen upload thumbnail dengan pratinjau gambar langsung menggunakan Alpine.js.
+-   ✅ **Course Enrollment System:** Relasi Many-to-Many antara pengguna dan kursus.
+-   ✅ **Student Progress Tracking:** Siswa dapat menandai pelajaran sebagai selesai.
+-   ✅ **Database Notifications:** Instruktur menerima notifikasi saat ada siswa baru yang mendaftar.
+-   ✅ **Background Jobs:** Menggunakan Laravel Queues untuk menangani pengiriman notifikasi secara asinkron.
+-   ✅ **Scheduled Tasks:** Menjalankan tugas pembersihan data secara periodik.
+-   ✅ **Automated Testing:** Suite pengujian fitur yang komprehensif menggunakan Pest.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 🛠️ Tech Stack
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+-   **Backend:** PHP 8.3, Laravel 12
+-   **Frontend:** Blade Templates, Tailwind CSS, Alpine.js
+-   **Database:** MySQL
+-   **Testing:** Pest
+-   **Development:** Vite, Laragon/XAMPP/MAMP
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## ⚙️ Getting Started
 
-## Security Vulnerabilities
+Untuk menjalankan proyek ini di lingkungan lokal Anda, ikuti langkah-langkah berikut.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Prerequisites
 
-## License
+Pastikan Anda sudah menginstal perangkat lunak berikut:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-   PHP (versi 8.3 atau lebih tinggi)
+-   Composer
+-   Node.js dan NPM
+-   Database (misalnya MySQL, MariaDB)
+
+### Local Setup
+
+1.  **Clone the repository**
+
+    ```bash
+    git clone https://github.com/rakha00/Skoolio-Learning-Management-System.git
+    cd skoolio
+    ```
+
+2.  **Install PHP dependencies**
+
+    ```bash
+    composer install
+    ```
+
+3.  **Install JavaScript dependencies**
+
+    ```bash
+    npm install
+    ```
+
+4.  **Setup environment file**
+    Salin file `.env.example` menjadi `.env`.
+
+    ```bash
+    cp .env.example .env
+    ```
+
+5.  **Generate application key**
+
+    ```bash
+    php artisan key:generate
+    ```
+
+6.  **Configure your `.env` file**
+    Buka file `.env` dan atur koneksi database Anda.
+
+    ```env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=db_skoolio
+    DB_USERNAME=root
+    DB_PASSWORD=your_password
+    ```
+
+    Pastikan Anda sudah membuat database `db_skoolio`.
+
+7.  **Run database migrations and seeders**
+    Perintah ini akan membuat semua tabel dan mengisinya dengan data dummy (pengguna, kursus, dan pelajaran).
+
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
+
+8.  **Link the storage directory**
+
+    ```bash
+    php artisan storage:link
+    ```
+
+9.  **Run the servers**
+    Anda perlu menjalankan 3 proses ini di **3 terminal terpisah**:
+
+    ```bash
+    # Terminal 1: PHP Server
+    php artisan serve
+
+    # Terminal 2: Vite Server (for assets)
+    npm run dev
+
+    # Terminal 3: Queue Worker (for background jobs)
+    php artisan queue:work
+    ```
+
+Aplikasi Anda sekarang berjalan di `http://localhost:8000`.
+
+### Default Login Credentials
+
+Setelah menjalankan seeder, Anda bisa menggunakan akun berikut untuk login:
+
+-   **Role:** Instructor
+-   **Email:** `instructor@skoolio.test` (atau cek email lain di database Anda)
+-   **Password:** `password`
+
+-   **Role:** Admin
+-   **Email:** `admin@skoolio.test`
+-   **Password:** `password`
+
+---
+
+## 🧪 Running Tests
+
+Untuk menjalankan suite pengujian otomatis, gunakan perintah berikut:
+
+```bash
+php artisan test
+```
