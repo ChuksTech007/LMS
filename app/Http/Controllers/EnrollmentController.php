@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StudentEnrolled;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -12,10 +13,13 @@ class EnrollmentController extends Controller
      */
     public function store(Request $request, Course $course)
     {
-        // Check if the user is not already enrolled
-        if (!$course->students()->where('user_id', auth()->id())->exists()) {
-            // Attach the user to the course
-            $course->students()->attach(auth()->id());
+        $user = auth()->user();
+
+        if (!$course->students()->where('user_id', $user->id)->exists()) {
+            $course->students()->attach($user->id);
+
+            // Dispatch the event after successful enrollment
+            event(new StudentEnrolled($course, $user));
         }
 
         return redirect()->route('courses.show', $course)
