@@ -3,7 +3,9 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\Instructor\LessonController;
+use App\Http\Controllers\LearningController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,14 @@ Route::get('/', function () {
 // Public Course Routes
 Route::get('/courses', [PageController::class, 'courseIndex'])->name('courses.index');
 Route::get('/courses/{course:slug}', [PageController::class, 'courseShow'])->name('courses.show');
+
+Route::post('/courses/{course}/enroll', [EnrollmentController::class, 'store'])
+    ->middleware('auth')
+    ->name('courses.enroll');
+
+Route::middleware(['auth', 'enrolled'])->group(function () {
+    Route::get('/learn/courses/{course}/lessons/{lesson}', [LearningController::class, 'showLesson'])->name('learning.lesson');
+});
 
 Route::middleware(['auth', 'role:instructor'])
     ->prefix('instructor')
