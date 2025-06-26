@@ -47,6 +47,14 @@
 							<p class="ml-2 text-sm text-gray-500">{{ $course->reviews->count() }} ulasan</p>
 						</div>
 					</div>
+					<div class="mt-4">
+						@foreach($course->categories as $category)
+							<span
+								class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+								{{ $category->name }}
+							</span>
+						@endforeach
+					</div>
 					<p class="text-3xl tracking-tight text-gray-900 mt-4">Rp
 						{{ number_format($course->price, 0, ',', '.') }}
 					</p>

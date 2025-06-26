@@ -7,6 +7,24 @@
 		<div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 			<h2 class="text-2xl font-bold tracking-tight text-gray-900">Katalog Kursus Skoolio</h2>
 
+			<div class="py-4 border-b border-t border-gray-200 my-6">
+				<div class="flex flex-wrap items-center gap-2">
+					<span class="text-sm font-medium mr-2">Filter Kategori:</span>
+					<a href="{{ route('courses.index') }}"
+						class="rounded-full px-3 py-1 text-sm transition-colors
+					  {{ !request('category') ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-white text-gray-600 hover:bg-gray-100 ring-1 ring-inset ring-gray-300' }}">
+						Semua
+					</a>
+					@foreach ($categories as $category)
+						<a href="{{ route('courses.index', ['category' => $category->slug]) }}"
+							class="rounded-full px-3 py-1 text-sm transition-colors
+							  {{ request('category') == $category->slug ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-white text-gray-600 hover:bg-gray-100 ring-1 ring-inset ring-gray-300' }}">
+							{{ $category->name }}
+						</a>
+					@endforeach
+				</div>
+			</div>
+
 			<div class="mt-6 mb-8">
 				<form action="{{ route('courses.index') }}" method="GET">
 					<div class="flex rounded-md shadow-sm">

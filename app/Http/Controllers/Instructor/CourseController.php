@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Instructor;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Instructor\StoreCourseRequest;
+use App\Models\Category;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -26,7 +27,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('pages.instructor.courses.create');
+        $categories = Category::all();
+        return view('pages.instructor.courses.create', compact('categories'));
     }
 
     /**
@@ -41,7 +43,9 @@ class CourseController extends Controller
             $validated['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
         }
 
-        auth()->user()->courses()->create($validated);
+        $course = auth()->user()->courses()->create($validated);
+
+        $course->categories()->attach($request->input('categories'));
 
         return redirect()->route('instructor.courses.index')->with('success', 'Kursus berhasil dibuat!');
     }
@@ -51,7 +55,8 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        return view('pages.instructor.courses.edit', compact('course'));
+        $categories = Category::all();
+        return view('pages.instructor.courses.edit', compact('course', 'categories'));
     }
 
     /**
@@ -72,6 +77,8 @@ class CourseController extends Controller
         }
 
         $course->update($validated);
+
+        $course->categories()->sync($request->input('categories'));
 
         return redirect()->route('instructor.courses.index')->with('success', 'Kursus berhasil diperbarui!');
     }

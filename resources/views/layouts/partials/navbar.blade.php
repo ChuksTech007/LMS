@@ -19,7 +19,15 @@
 				@endguest
 
 				@auth
-					@if(auth()->user()->role->value === 'student')
+					@if (auth()->user()->role === \App\Enums\Role::ADMIN)
+						<a href="{{ route('admin.dashboard') }}"
+							class="rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Admin
+							Dashboard</a>
+					@elseif (auth()->user()->role === \App\Enums\Role::INSTRUCTOR)
+						<a href="{{ route('instructor.dashboard') }}"
+							class="rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Instructor
+							Dashboard</a>
+					@else
 						<a href="{{ route('student.dashboard') }}"
 							class="rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Kursus Saya</a>
 					@endif

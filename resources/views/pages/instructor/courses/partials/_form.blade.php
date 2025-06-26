@@ -34,6 +34,27 @@
 </div>
 
 <div>
+	<label class="block text-sm font-medium leading-6 text-gray-900">Kategori</label>
+	<p class="text-xs text-gray-500">Pilih satu atau lebih kategori yang relevan untuk kursus ini.</p>
+	<div class="mt-2 space-y-2 border border-gray-200 rounded-md p-4">
+		@foreach ($categories as $category)
+			<div class="relative flex items-start">
+				<div class="flex h-6 items-center">
+					<input id="category-{{ $category->id }}" name="categories[]" value="{{ $category->id }}" type="checkbox"
+						class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+						@checked(in_array($category->id, old('categories', $course->categories->pluck('id')->toArray() ?? [])))>
+				</div>
+				<div class="ml-3 text-sm leading-6">
+					<label for="category-{{ $category->id }}"
+						class="font-medium text-gray-900">{{ $category->name }}</label>
+				</div>
+			</div>
+		@endforeach
+	</div>
+	@error('categories')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
+</div>
+
+<div>
 	<label class="block text-sm font-medium leading-6 text-gray-900">Thumbnail Kursus</label>
 	<div x-data="{ thumbnailPreview: '{{ isset($course) && $course->thumbnail ? asset('storage/' . $course->thumbnail) : '' }}' }"
 		class="mt-2">

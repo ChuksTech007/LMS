@@ -79,4 +79,12 @@ class Course extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    /**
+     * Get the categories for the course.
+     */
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class);
+    }
 }

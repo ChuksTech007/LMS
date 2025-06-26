@@ -116,6 +116,10 @@
 							<a href="{{ route('admin.courses.index') }}"
 								class="text-indigo-600 hover:text-indigo-800 font-medium mt-2 inline-block">Kelola Semua
 								Kursus &rarr;</a>
+							<br>
+							<a href="{{ route('admin.categories.index') }}"
+								class="text-indigo-600 hover:text-indigo-800 font-medium mt-2 inline-block">Kelola Kategori
+								Kursus &rarr;</a>
 						</div>
 					</div>
 				</div>

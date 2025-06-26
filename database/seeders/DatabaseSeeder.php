@@ -3,10 +3,13 @@
 namespace Database\Seeders;
 
 use App\Enums\Role;
+use App\Models\Category;
+use App\Models\Course;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,35 +18,87 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->createMany([
-            [
-                'name' => 'Admin',
-                'email' => 'admin@gmail.com',
-                'password' => Hash::make('admin'),
-                'role' => Role::ADMIN
-            ],
-            [
-                'name' => 'Instructor',
-                'email' => 'ins@gmail.com',
-                'password' => Hash::make('admin'),
-                'role' => Role::INSTRUCTOR
-            ],
-            [
-                'name' => 'Student',
-                'email' => 'stu@gmail.com',
-                'password' => Hash::make('admin'),
-                'role' => Role::STUDENT
-            ],
+        $this->command->info('Starting database seeding...');
+
+        // 1. Create Default Users
+        $this->command->info('Creating default users...');
+        $admin = User::factory()->create([
+            'name' => 'Admin Skoolio',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('password'),
+            'role' => Role::ADMIN,
         ]);
 
-        // Creates 1 Admin, 3 Instructors, 10 Students
-        User::factory()->create(['name' => 'Admin User', 'email' => 'admin@skoolio.test', 'role' => Role::ADMIN]);
-        User::factory()->count(3)->create(['role' => Role::INSTRUCTOR]);
+        $instructor = User::factory()->create([
+            'name' => 'Instructor Skoolio',
+            'email' => 'inst@gmail.com',
+            'password' => Hash::make('password'),
+            'role' => Role::INSTRUCTOR,
+        ]);
+
+        $student = User::factory()->create([
+            'name' => 'student Skoolio',
+            'email' => 'stud@gmail.com',
+            'password' => Hash::make('password'),
+            'role' => Role::INSTRUCTOR,
+        ]);
+
         User::factory()->count(10)->create(['role' => Role::STUDENT]);
+        $this->command->info('Default users created.');
 
-        // Run the Course and Lesson seeder
-        $this->call([
-            CourseAndLessonSeeder::class,
-        ]);
+        // 2. Create Categories
+        $this->command->info('Creating categories...');
+        $webDev = Category::create(['name' => 'Web Development', 'slug' => 'web-development']);
+        $uiux = Category::create(['name' => 'UI/UX Design', 'slug' => 'ui-ux-design']);
+        $dataScience = Category::create(['name' => 'Data Science', 'slug' => 'data-science']);
+        $this->command->info('Categories created.');
+
+        // 3. Create Curated Courses with Lessons & Categories
+        $this->command->info('Creating curated courses...');
+        $coursesData = [
+            [
+                'course' => ['title' => 'Laravel 12 From Scratch for Beginners', 'description' => 'Learn the fundamentals of web development with the most popular PHP framework.', 'price' => 250000],
+                'lessons' => [['title' => 'Installation & Setup'], ['title' => 'Routing & Controllers'], ['title' => 'Blade Templating'], ['title' => 'Eloquent ORM Basics']],
+                'categories' => [$webDev, $dataScience]
+            ],
+            [
+                'course' => ['title' => 'Modern Frontend with Vue.js 3', 'description' => 'Build interactive user interfaces with Vue.js, covering components, state management, and routing.', 'price' => 350000],
+                'lessons' => [['title' => 'Intro to Vue'], ['title' => 'Component Architecture'], ['title' => 'State Management with Pinia'], ['title' => 'Routing with Vue Router']],
+                'categories' => [$webDev, $uiux]
+            ],
+            [
+                'course' => ['title' => 'Advanced Database Design & Optimization', 'description' => 'Go beyond basic queries. Learn about normalization, indexing, and writing efficient SQL.', 'price' => 450000],
+                'lessons' => [['title' => 'Database Normalization'], ['title' => 'Indexing Strategies'], ['title' => 'Advanced SQL Queries'], ['title' => 'Transactions & Locks']],
+                'categories' => [$dataScience]
+            ],
+        ];
+
+        foreach ($coursesData as $data) {
+            // Create the course and assign it to our main instructor
+            $course = Course::create([
+                'user_id' => $instructor->id,
+                'title' => $data['course']['title'],
+                'slug' => Str::slug($data['course']['title']),
+                'description' => $data['course']['description'],
+                'price' => $data['course']['price'],
+                'is_published' => true,
+            ]);
+
+            // Attach categories to the course
+            $categoryIds = collect($data['categories'])->pluck('id');
+            $course->categories()->attach($categoryIds);
+
+            // Create lessons for the course
+            foreach ($data['lessons'] as $lessonData) {
+                $course->lessons()->create([
+                    'title' => $lessonData['title'],
+                    'slug' => Str::slug($lessonData['title']),
+                    'duration_in_minutes' => rand(5, 30),
+                    'content' => 'This is a sample lesson content generated by the seeder. The actual lesson content would be here.',
+                ]);
+            }
+        }
+        $this->command->info('Courses with lessons and categories created.');
+        $this->command->info('Database seeding completed successfully!');
     }
 }

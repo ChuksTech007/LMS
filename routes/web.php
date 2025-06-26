@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -80,10 +81,7 @@ Route::middleware('auth')->group(function () {
 
     // Instructor Routes
     Route::middleware('role:instructor')->prefix('instructor')->name('instructor.')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('pages.instructor.dashboard');
-        })->name('dashboard');
-
+        Route::get('/dashboard', [\App\Http\Controllers\Instructor\DashboardController::class, 'index'])->name('dashboard');
         Route::resource('courses', CourseController::class);
         Route::resource('courses.lessons', LessonController::class)->scoped();
     });
@@ -97,5 +95,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/courses', [\App\Http\Controllers\Admin\CourseController::class, 'index'])->name('courses.index');
         Route::patch('/courses/{course}/toggle-status', [\App\Http\Controllers\Admin\CourseController::class, 'toggleStatus'])->name('courses.toggleStatus');
+
+        Route::resource('/categories', CategoryController::class);
     });
 });
