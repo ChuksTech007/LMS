@@ -1,12 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Public;
 
+use App\Http\Controllers\Controller;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
+    /**
+     * Display the home page.
+     */
+    public function home()
+    {
+        return view("pages.home");
+    }
+
     /**
      * Display a list of all public courses.
      */

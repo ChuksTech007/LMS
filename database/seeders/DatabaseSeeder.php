@@ -15,31 +15,31 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create 1 Admin
-        User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@skoolio.test',
-            'password' => Hash::make('password'),
-            'role' => Role::ADMIN,
+        User::factory()->createMany([
+            [
+                'name' => 'Admin',
+                'email' => 'admin@gmail.com',
+                'password' => Hash::make('admin'),
+                'role' => Role::ADMIN
+            ],
+            [
+                'name' => 'Instructor',
+                'email' => 'ins@gmail.com',
+                'password' => Hash::make('admin'),
+                'role' => Role::INSTRUCTOR
+            ],
+            [
+                'name' => 'Student',
+                'email' => 'stu@gmail.com',
+                'password' => Hash::make('admin'),
+                'role' => Role::STUDENT
+            ],
         ]);
 
-        // Create 1 Instructor
-        User::factory()->create([
-            'name' => 'Instructor User',
-            'email' => 'instructor@skoolio.test',
-            'password' => Hash::make('password'),
-            'role' => Role::INSTRUCTOR,
-        ]);
-
-        // Create 3 Instructors
-        User::factory()->count(3)->create([
-            'role' => Role::INSTRUCTOR,
-        ]);
-
-        // Create 10 Students
-        User::factory()->count(10)->create([
-            'role' => Role::STUDENT,
-        ]);
+        // Creates 1 Admin, 3 Instructors, 10 Students
+        User::factory()->create(['name' => 'Admin User', 'email' => 'admin@skoolio.test', 'role' => Role::ADMIN]);
+        User::factory()->count(3)->create(['role' => Role::INSTRUCTOR]);
+        User::factory()->count(10)->create(['role' => Role::STUDENT]);
 
         // Run the Course and Lesson seeder
         $this->call([
