@@ -33,8 +33,7 @@ class PageController extends Controller
      */
     public function courseShow(Course $course)
     {
-        $course->load(['instructor', 'lessons']);
-
+        $course->load(['instructor', 'lessons', 'reviews.user']);
         return view('pages.courses.show', compact('course'));
     }
 }

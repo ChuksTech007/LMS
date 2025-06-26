@@ -71,4 +71,12 @@ class Course extends Model
 
         return ($completedLessonsCount / $totalLessonsCount) * 100;
     }
+
+    /**
+     * Summary of reviews
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
 }

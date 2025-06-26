@@ -14,7 +14,7 @@
 					@foreach ($course->lessons as $lesson_item)
 								<li>
 									<a href="{{ route('learning.lesson', [$course, $lesson_item]) }}" class="flex items-center p-4 text-sm font-medium transition-colors duration-200
-																				  {{ $lesson_item->id === $currentLesson->id
+																												  {{ $lesson_item->id === $currentLesson->id
 						? 'bg-indigo-50 text-indigo-700 border-l-4 border-indigo-500'
 						: 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
 
@@ -100,6 +100,42 @@
 						@endif
 					</div>
 				@endif
+
+				<div class="mt-12 border-t border-gray-200 pt-8">
+					<h3 class="text-xl font-bold text-gray-900">Tinggalkan Ulasan</h3>
+					@if(session('success'))
+						<p class="mt-2 text-sm text-green-600">{{ session('success') }}</p>
+					@endif
+
+					<form action="{{ route('courses.reviews.store', $course) }}" method="POST" class="mt-4 space-y-4">
+						@csrf
+						<div>
+							<label for="rating" class="block text-sm font-medium text-gray-700">Rating Anda</label>
+							<div class="flex items-center mt-1">
+								{{-- Added padding classes here --}}
+								<select name="rating" id="rating"
+									class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 px-3 py-2">
+									<option value="5">5 Bintang</option>
+									<option value="4">4 Bintang</option>
+									<option value="3">3 Bintang</option>
+									<option value="2">2 Bintang</option>
+									<option value="1">1 Bintang</option>
+								</select>
+							</div>
+							@error('rating')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+						</div>
+						<div>
+							<label for="comment" class="block text-sm font-medium text-gray-700">Komentar Anda</label>
+							{{-- Added padding classes here --}}
+							<textarea name="comment" id="comment" rows="4"
+								class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 px-3 py-2"></textarea>
+							@error('comment')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+						</div>
+						<button type="submit"
+							class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700">Kirim
+							Ulasan</button>
+					</form>
+				</div>
 			</div>
 		</main>
 	</div>

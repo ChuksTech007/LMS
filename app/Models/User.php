@@ -73,4 +73,13 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Lesson::class, 'lesson_user');
     }
+
+    /**
+     * Get the reviews for the user.
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
 }

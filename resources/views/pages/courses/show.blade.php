@@ -31,6 +31,22 @@
 				<div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
 					<h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{{ $course->title }}</h1>
 					<h3 class="text-lg font-medium text-gray-700 mt-2">Oleh {{ $course->instructor->name }}</h3>
+					<div class="mt-4">
+						<h3 class="sr-only">Reviews</h3>
+						<div class="flex items-center">
+							<div class="flex items-center">
+								@for ($i = 1; $i <= 5; $i++)
+									<svg class="h-5 w-5 flex-shrink-0 {{ $course->reviews->avg('rating') >= $i ? 'text-yellow-400' : 'text-gray-300' }}"
+										viewBox="0 0 20 20" fill="currentColor">
+										<path fill-rule="evenodd"
+											d="M10.868 2.884c.321-.662 1.215-.662 1.536 0l1.83 3.75 4.145.602c.73.106 1.02.998.494 1.503l-2.998 2.922.708 4.128c.125.726-.638 1.28-1.286.945l-3.708-1.95-3.708 1.95c-.648.335-1.41-.22-1.286-.945l.708-4.128L2.39 8.94c-.527-.505-.236-1.397.494-1.503l4.145-.602 1.83-3.75z"
+											clip-rule="evenodd" />
+									</svg>
+								@endfor
+							</div>
+							<p class="ml-2 text-sm text-gray-500">{{ $course->reviews->count() }} ulasan</p>
+						</div>
+					</div>
 					<p class="text-3xl tracking-tight text-gray-900 mt-4">Rp
 						{{ number_format($course->price, 0, ',', '.') }}
 					</p>
@@ -95,6 +111,35 @@
 								</li>
 							@endforeach
 						</ul>
+					</div>
+
+					<div class="mt-16">
+						<h2 class="text-xl font-bold text-gray-900">Ulasan dari Siswa</h2>
+						<div class="mt-6 space-y-10 divide-y divide-gray-200 border-b border-t border-gray-200 pb-10">
+							@forelse ($course->reviews as $review)
+								<div class="pt-10">
+									<div class="flex items-center">
+										<div class="font-medium text-gray-900">{{ $review->user->name }}</div>
+										<div class="ml-4 flex items-center">
+											@for ($i = 1; $i <= 5; $i++)
+												<svg class="h-5 w-5 flex-shrink-0 {{ $review->rating >= $i ? 'text-yellow-400' : 'text-gray-300' }}"
+													viewBox="0 0 20 20" fill="currentColor">
+													<path fill-rule="evenodd"
+														d="M10.868 2.884c.321-.662 1.215-.662 1.536 0l1.83 3.75 4.145.602c.73.106 1.02.998.494 1.503l-2.998 2.922.708 4.128c.125.726-.638 1.28-1.286.945l-3.708-1.95-3.708 1.95c-.648.335-1.41-.22-1.286-.945l.708-4.128L2.39 8.94c-.527-.505-.236-1.397.494-1.503l4.145-.602 1.83-3.75z"
+														clip-rule="evenodd" />
+												</svg>
+											@endfor
+										</div>
+									</div>
+									<div class="prose prose-sm mt-4 max-w-none text-gray-500">
+										<p>{{ $review->comment }}</p>
+									</div>
+								</div>
+							@empty
+								<p class="pt-10 text-center text-gray-500">Jadilah yang pertama memberikan ulasan untuk kursus
+									ini!</p>
+							@endforelse
+						</div>
 					</div>
 				</div>
 			</div>

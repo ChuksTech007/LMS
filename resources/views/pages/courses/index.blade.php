@@ -7,6 +7,35 @@
 		<div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 			<h2 class="text-2xl font-bold tracking-tight text-gray-900">Katalog Kursus Skoolio</h2>
 
+			<div class="mt-6 mb-8">
+				<form action="{{ route('courses.index') }}" method="GET">
+					<div class="flex rounded-md shadow-sm">
+						<div class="relative flex flex-grow items-stretch focus-within:z-10">
+							<input type="search" name="search" id="search"
+								class="block w-full rounded-none rounded-l-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+								placeholder="Cari kursus..." value="{{ request('search') }}">
+						</div>
+						<button type="submit"
+							class="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+							<svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+								<path fill-rule="evenodd"
+									d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+									clip-rule="evenodd" />
+							</svg>
+							Cari
+						</button>
+					</div>
+				</form>
+			</div>
+
+			@if (request('search'))
+				<p class="mb-6 text-sm text-gray-700">
+					Menampilkan hasil pencarian untuk: <span class="font-bold">{{ request('search') }}</span>
+					<a href="{{ route('courses.index') }}" class="ml-2 text-indigo-600 hover:text-indigo-800 text-xs">[Hapus
+						Filter]</a>
+				</p>
+			@endif
+
 			<div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
 				@forelse ($courses as $course)
 					<div class="group relative">
