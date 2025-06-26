@@ -63,7 +63,7 @@
 			</div>
 
 			<div class="mt-12">
-				{{ $courses->links() }}
+				{{ $courses->appends(request()->query())->links() }}
 			</div>
 		</div>
 	</div>

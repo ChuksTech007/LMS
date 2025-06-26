@@ -19,11 +19,22 @@ class PageController extends Controller
     /**
      * Display a list of all public courses.
      */
-    public function courseIndex()
+    public function courseIndex(Request $request) // Inject Request
     {
-        $courses = Course::where('is_published', true)
-            ->latest()
-            ->paginate(9);
+        // Start with a base query for published courses
+        $query = Course::where('is_published', true);
+
+        // If a search query exists, add a where clause
+        if ($request->filled('search')) {
+            $searchTerm = $request->input('search');
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('title', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('description', 'LIKE', "%{$searchTerm}%");
+            });
+        }
+
+        // Get the final results with pagination
+        $courses = $query->latest()->paginate(9);
 
         return view('pages.courses.index', compact('courses'));
     }
