@@ -7,6 +7,7 @@ use App\Http\Requests\Instructor\StoreCourseRequest;
 use App\Models\Category;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -55,6 +56,8 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
+        Gate::authorize('update', $course);
+
         $categories = Category::all();
         return view('pages.instructor.courses.edit', compact('course', 'categories'));
     }
@@ -64,6 +67,8 @@ class CourseController extends Controller
      */
     public function update(StoreCourseRequest $request, Course $course)
     {
+        Gate::authorize('update', $course);
+
         $validated = $request->validated();
         $validated['slug'] = Str::slug($validated['title']);
 
@@ -88,6 +93,8 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
+        Gate::authorize('delete', $course);
+
         if ($course->thumbnail) {
             Storage::disk('public')->delete($course->thumbnail);
         }

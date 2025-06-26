@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Course;
+use App\Policies\CoursePolicy;
 use App\View\Composers\NotificationComposer;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
