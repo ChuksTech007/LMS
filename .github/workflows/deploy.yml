@@ -1,0 +1,52 @@
+name: Deploy to HestiaCP
+
+# Trigger: Run this workflow ONLY on push to the 'main' branch
+on:
+  push:
+    branches:
+      - main
+  # Allows the workflow to be run manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Use a popular action to run commands via SSH
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HESTIA_HOST }}
+          username: ${{ secrets.HESTIA_USER }}
+          key: ${{ secrets.HESTIA_SSH_PRIVATE_KEY }}
+          # port: 22 # Change if your SSH port is not 22
+          script: |
+            # Navigate to the application directory
+            cd ${{ secrets.HESTIA_APP_PATH }}
+
+            # Enable maintenance mode
+            php artisan down
+
+            # Pull the latest changes from the main branch
+            git pull origin main
+
+            # Install Composer dependencies (without dev packages)
+            composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+
+            # Run database migrations
+            php artisan migrate --force
+
+            # Clear and cache for production optimization
+            php artisan cache:clear
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            # Disable maintenance mode
+            php artisan up
+
+            echo "🚀 Deployment to HestiaCP successful!"
