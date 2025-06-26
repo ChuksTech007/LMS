@@ -48,7 +48,7 @@
 						</div>
 
 						<div class="text-sm leading-6">
-							<a href="#"
+							<a href="{{ route('password.request') }}"
 								class="font-semibold text-indigo-600 hover:text-indigo-500">{{ __('auth.forgot_password') }}</a>
 						</div>
 					</div>
