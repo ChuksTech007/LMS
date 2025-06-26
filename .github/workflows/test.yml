@@ -1,0 +1,51 @@
+# Workflow name that will appear in the Actions tab
+name: Laravel Tests
+
+# Trigger: When this workflow will run
+on:
+  push:
+    branches: ["main", "dev"]
+  pull_request:
+    branches: ["main", "dev"]
+
+# List of jobs that will be run
+jobs:
+  # We define a job with ID 'laravel-tests'
+  laravel-tests:
+    runs-on: ubuntu-latest
+
+    # Steps that will be executed
+    steps:
+      # Step 1: Checkout code from repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Setup PHP with required extensions for Laravel
+      # Using popular action from shivammathur to setup PHP
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3" # Adjust according to your project's PHP version
+          extensions: mbstring, xml, ctype, fileinfo, curl, dom, pdo, sqlite, pdo_sqlite
+          tools: composer:v2
+          coverage: none
+
+      # Step 3: Install dependencies via Composer
+      # --no-progress, --prefer-dist, and --optimize-autoloader are standard flags for CI
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+      # Step 4: Prepare .env file for testing
+      # Laravel requires .env file to avoid errors when running artisan
+      - name: Prepare environment file
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      # Step 5: Generate Application Key
+      # Application key must exist before running tests
+      - name: Generate application key
+        run: php artisan key:generate
+
+      # Step 6: Run tests using Artisan
+      # The core command you requested
+      - name: Run Pest/PHPUnit tests
+        run: php artisan test
