@@ -19,7 +19,16 @@ class Course extends Model
         'description',
         'price',
         'thumbnail',
+        'is_published',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'is_published' => 'boolean',
+        ];
+    }
+
 
     /**
      * Get the user that owns the course.

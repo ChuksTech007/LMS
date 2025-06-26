@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
@@ -24,8 +25,17 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
-
         $request->session()->regenerate();
+
+        $user = $request->user();
+
+        // Redirect based on user role
+        if ($user->role === Role::ADMIN) {
+            return redirect()->route('admin.dashboard');
+        }
+        if ($user->role === Role::INSTRUCTOR) {
+            return redirect()->route('instructor.dashboard');
+        }
 
         return redirect()->intended('/');
     }

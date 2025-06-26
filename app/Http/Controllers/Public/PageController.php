@@ -21,7 +21,9 @@ class PageController extends Controller
      */
     public function courseIndex()
     {
-        $courses = Course::latest()->paginate(9); // Get latest courses with pagination
+        $courses = Course::where('is_published', true)
+            ->latest()
+            ->paginate(9);
 
         return view('pages.courses.index', compact('courses'));
     }

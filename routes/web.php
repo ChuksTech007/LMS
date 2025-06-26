@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Instructor\CourseController;
@@ -69,10 +71,21 @@ Route::middleware('auth')->group(function () {
     // Instructor Routes
     Route::middleware('role:instructor')->prefix('instructor')->name('instructor.')->group(function () {
         Route::get('/dashboard', function () {
-            return view('instructor.pages.dashboard');
+            return view('pages.instructor.dashboard');
         })->name('dashboard');
 
         Route::resource('courses', CourseController::class);
         Route::resource('courses.lessons', LessonController::class)->scoped();
+    });
+
+    // Admin Routes
+    Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update');
+
+        Route::get('/courses', [\App\Http\Controllers\Admin\CourseController::class, 'index'])->name('courses.index');
+        Route::patch('/courses/{course}/toggle-status', [\App\Http\Controllers\Admin\CourseController::class, 'toggleStatus'])->name('courses.toggleStatus');
     });
 });
