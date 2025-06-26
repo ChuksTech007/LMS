@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     Route::get('/notifications/{notification}', [NotificationController::class, 'read'])->name('notifications.read');
     Route::post('/courses/{course}/enroll', [EnrollmentController::class, 'store'])->name('courses.enroll');
+    Route::get('/my-dashboard', [\App\Http\Controllers\Student\DashboardController::class, 'index'])->name('student.dashboard');
 
     // Learning Routes (for enrolled students)
     Route::middleware('enrolled')->prefix('learn')->name('learning.')->group(function () {

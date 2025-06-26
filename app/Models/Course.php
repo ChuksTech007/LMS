@@ -53,4 +53,22 @@ class Course extends Model
     {
         return $this->belongsToMany(User::class, 'course_user');
     }
+
+    /**
+     * Calculate the completion progress for a specific user.
+     */
+    public function getProgressFor(User $user): int
+    {
+        $totalLessonsCount = $this->lessons()->count();
+
+        if ($totalLessonsCount === 0) {
+            return 0;
+        }
+
+        $completedLessonsCount = $user->completedLessons()
+            ->where('course_id', $this->id)
+            ->count();
+
+        return ($completedLessonsCount / $totalLessonsCount) * 100;
+    }
 }

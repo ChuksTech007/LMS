@@ -19,6 +19,11 @@
 				@endguest
 
 				@auth
+					@if(auth()->user()->role->value === 'student')
+						<a href="{{ route('student.dashboard') }}"
+							class="rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Kursus Saya</a>
+					@endif
+
 					{{-- Notification Bell --}}
 					@if (auth()->user()->role->value === 'instructor')
 						<div class="relative ml-3">
