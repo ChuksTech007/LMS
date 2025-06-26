@@ -68,10 +68,14 @@
 						</div>
 					@endif
 
-					<div class="ml-4">
-						<span class="text-sm text-gray-700">Halo, {{ auth()->user()->name }}</span>
-						<form method="POST" action="{{ route('logout') }}" class="inline-block ml-4">@csrf<button
-								type="submit" class="text-sm text-gray-900 hover:text-gray-500">Logout</button></form>
+					<div class="ml-4 flex items-center">
+						<a href="{{ route('profile.edit') }}" class="text-sm text-gray-500 hover:text-gray-700">
+							Halo, {{ auth()->user()->name }}
+						</a>
+						<form method="POST" action="{{ route('logout') }}" class="inline-block ml-4">
+							@csrf
+							<button type="submit" class="text-sm text-gray-900 hover:text-gray-500">Logout</button>
+						</form>
 					</div>
 				@endauth
 			</div>

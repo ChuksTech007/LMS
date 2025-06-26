@@ -14,6 +14,7 @@ use App\Http\Controllers\Student\LearningController;
 use App\Http\Controllers\Public\PageController;
 use App\Http\Controllers\Student\ReviewController;
 use App\Http\Controllers\User\NotificationController;
+use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,6 +73,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/courses/{course}/enroll', [EnrollmentController::class, 'store'])->name('courses.enroll');
     Route::get('/my-dashboard', [\App\Http\Controllers\Student\DashboardController::class, 'index'])->name('student.dashboard');
     Route::post('/courses/{course}/reviews', [ReviewController::class, 'store'])->name('courses.reviews.store');
+
+    Route::controller(ProfileController::class)->prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', 'edit')->name('edit');
+        Route::patch('/', 'update')->name('update');
+        Route::put('/password', 'updatePassword')->name('password.update');
+    });
 
     // Learning Routes (for enrolled students)
     Route::middleware('enrolled')->prefix('learn')->name('learning.')->group(function () {
