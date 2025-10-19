@@ -1,164 +1,163 @@
-# Skoolio - Learning Management System (LMS)
+# School - Learning Management System (LMS)
 
-![PHP](https://img.shields.io/badge/PHP-8.3%2B-777BB4?style=for-the-badge&logo=php)
-![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel)
-![Testing](https://img.shields.io/badge/Testing-Pest-C5A13A?style=for-the-badge&logo=pest)
+![PHP](https://img.shields.io/badge/PHP-8.3%2B-777BB4?style=for-the-badge\&logo=php)
+![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge\&logo=laravel)
+![Testing](https://img.shields.io/badge/Testing-Pest-C5A13A?style=for-the-badge\&logo=pest)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)
 
-Skoolio adalah sebuah prototipe Learning Management System (LMS) fungsional yang dibangun sepenuhnya menggunakan Laravel 12. Proyek ini dibuat dari nol dengan tujuan untuk menjelajahi fitur-fitur inti dan lanjutan dari framework Laravel secara mendalam, dengan fokus pada praktik terbaik dan alur kerja modern.
+School is a functional prototype of a Learning Management System (LMS) built entirely using Laravel 12. This project was created from scratch with the goal of exploring the core and advanced features of the Laravel framework in depth, focusing on best practices and modern workflows.
 
-![Skoolio Screenshot Placeholder](https://i.imgur.com/TTOD7Yn.jpeg)
-
+![School Screenshot Placeholder](https://i.imgur.com/TTOD7Yn.jpeg)
 
 ---
 
 ## 🚀 About The Project
 
-Proyek ini mensimulasikan platform e-learning di mana pengajar (instructors) dapat membuat dan mengelola kursus serta pelajaran, dan siswa (students) dapat mendaftar, belajar, dan melacak kemajuan mereka.
+This project simulates an e-learning platform where instructors can create and manage courses and lessons, and students can register, learn, and track their progress.
 
-Tujuan utamanya adalah untuk mendemonstrasikan implementasi dari berbagai konsep Laravel dalam satu aplikasi yang kohesif, termasuk:
+The main purpose is to demonstrate the implementation of various Laravel concepts within a cohesive application, including:
 
--   Otentikasi manual dari dasar.
--   Sistem peran dan otorisasi yang fleksibel.
--   Manajemen sumber daya yang bersarang (Nested Resources).
--   Proses latar belakang menggunakan Queues dan Scheduled Tasks.
--   Pengujian otomatis untuk memastikan keandalan aplikasi.
+* Manual authentication built from the ground up.
+* Flexible role and authorization system.
+* Nested resource management.
+* Background processes using queues and scheduled tasks.
+* Automated testing to ensure application reliability.
 
 ---
 
 ## ✨ Key Features
 
--   ✅ **Manual Authentication:** Sistem registrasi, login, dan logout yang dibuat dari nol.
--   ✅ **Role-Based Access Control (RBAC):** Tiga peran (Student, Instructor, Admin) dilindungi oleh Middleware kustom.
--   ✅ **Ownership Authorization:** Laravel Policies memastikan instruktur hanya bisa mengelola konten miliknya.
--   ✅ **Course & Lesson Management:** Fungsionalitas CRUD penuh untuk instruktur mengelola kursus dan pelajaran.
--   ✅ **Interactive File Uploads:** Komponen upload thumbnail dengan pratinjau gambar langsung menggunakan Alpine.js.
--   ✅ **Course Enrollment System:** Relasi Many-to-Many antara pengguna dan kursus.
--   ✅ **Student Progress Tracking:** Siswa dapat menandai pelajaran sebagai selesai.
--   ✅ **Database Notifications:** Instruktur menerima notifikasi saat ada siswa baru yang mendaftar.
--   ✅ **Background Jobs:** Menggunakan Laravel Queues untuk menangani pengiriman notifikasi secara asinkron.
--   ✅ **Scheduled Tasks:** Menjalankan tugas pembersihan data secara periodik.
--   ✅ **Automated Testing:** Suite pengujian fitur yang komprehensif menggunakan Pest.
+* ✅ **Manual Authentication:** Custom-built registration, login, and logout system.
+* ✅ **Role-Based Access Control (RBAC):** Three roles (Student, Instructor, Admin) protected by custom middleware.
+* ✅ **Ownership Authorization:** Laravel policies ensuring instructors can only manage their own content.
+* ✅ **Course & Lesson Management:** Full CRUD functionality for instructors to manage courses and lessons.
+* ✅ **Interactive File Uploads:** Thumbnail upload component with live image preview using Alpine.js.
+* ✅ **Course Enrollment System:** Many-to-Many relationship between users and courses.
+* ✅ **Student Progress Tracking:** Students can mark lessons as completed.
+* ✅ **Database Notifications:** Instructors receive notifications when new students enroll.
+* ✅ **Background Jobs:** Laravel queues to handle asynchronous notification sending.
+* ✅ **Scheduled Tasks:** Periodic data cleanup tasks.
+* ✅ **Automated Testing:** Comprehensive feature test suite using Pest.
 
 ---
 
 ## 🛠️ Tech Stack
 
--   **Backend:** PHP 8.3, Laravel 12
--   **Frontend:** Blade Templates, Tailwind CSS, Alpine.js
--   **Database:** MySQL
--   **Testing:** Pest
--   **Development:** Vite, Laragon/XAMPP/MAMP
+* **Backend:** PHP 8.3, Laravel 12
+* **Frontend:** Blade Templates, Tailwind CSS, Alpine.js
+* **Database:** MySQL
+* **Testing:** Pest
+* **Development:** Vite, Laragon/XAMPP/MAMP
 
 ---
 
 ## ⚙️ Getting Started
 
-Untuk menjalankan proyek ini di lingkungan lokal Anda, ikuti langkah-langkah berikut.
+To run this project locally, follow the steps below.
 
 ### Prerequisites
 
-Pastikan Anda sudah menginstal perangkat lunak berikut:
+Make sure you have the following installed:
 
--   PHP (versi 8.3 atau lebih tinggi)
--   Composer
--   Node.js dan NPM
--   Database (misalnya MySQL, MariaDB)
+* PHP (version 8.3 or higher)
+* Composer
+* Node.js and NPM
+* Database (e.g., MySQL, MariaDB)
 
 ### Local Setup
 
-1.  **Clone the repository**
+1. **Clone the repository**
 
-    ```bash
-    git clone https://github.com/rakha00/Skoolio-Learning-Management-System.git
-    cd skoolio
-    ```
+```bash
+git clone https://github.com/rakha00/School-Learning-Management-System.git
+cd School
+```
 
-2.  **Install PHP dependencies**
+2. **Install PHP dependencies**
 
-    ```bash
-    composer install
-    ```
+```bash
+composer install
+```
 
-3.  **Install JavaScript dependencies**
+3. **Install JavaScript dependencies**
 
-    ```bash
-    npm install
-    ```
+```bash
+npm install
+```
 
-4.  **Setup environment file**
-    Salin file `.env.example` menjadi `.env`.
+4. **Set up the environment file**
+   Copy `.env.example` to `.env`
 
-    ```bash
-    cp .env.example .env
-    ```
+```bash
+cp .env.example .env
+```
 
-5.  **Generate application key**
+5. **Generate the application key**
 
-    ```bash
-    php artisan key:generate
-    ```
+```bash
+php artisan key:generate
+```
 
-6.  **Configure your `.env` file**
-    Buka file `.env` dan atur koneksi database Anda.
+6. **Configure your `.env` file**
+   Open `.env` and set your database connection:
 
-    ```env
-    DB_CONNECTION=mysql
-    DB_HOST=127.0.0.1
-    DB_PORT=3306
-    DB_DATABASE=db_skoolio
-    DB_USERNAME=root
-    DB_PASSWORD=your_password
-    ```
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=db_School
+DB_USERNAME=root
+DB_PASSWORD=your_password
+```
 
-    Pastikan Anda sudah membuat database `db_skoolio`.
+Make sure you have created the `db_School` database.
 
-7.  **Run database migrations and seeders**
-    Perintah ini akan membuat semua tabel dan mengisinya dengan data dummy (pengguna, kursus, dan pelajaran).
+7. **Run migrations and seeders**
+   This will create tables and populate dummy data (users, courses, lessons).
 
-    ```bash
-    php artisan migrate:fresh --seed
-    ```
+```bash
+php artisan migrate:fresh --seed
+```
 
-8.  **Link the storage directory**
+8. **Link the storage directory**
 
-    ```bash
-    php artisan storage:link
-    ```
+```bash
+php artisan storage:link
+```
 
-9.  **Run the servers**
-    Anda perlu menjalankan 3 proses ini di **3 terminal terpisah**:
+9. **Run the servers**
+   You need to run these 3 commands in **3 separate terminals**:
 
-    ```bash
-    # Terminal 1: PHP Server
-    php artisan serve
+```bash
+# Terminal 1: PHP server
+php artisan serve
 
-    # Terminal 2: Vite Server (for assets)
-    npm run dev
+# Terminal 2: Vite server (for assets)
+npm run dev
 
-    # Terminal 3: Queue Worker (for background jobs)
-    php artisan queue:work
-    ```
+# Terminal 3: Queue worker (for background jobs)
+php artisan queue:work
+```
 
-Aplikasi Anda sekarang berjalan di `http://localhost:8000`.
+Your application will now be accessible at `http://localhost:8000`.
 
 ### Default Login Credentials
 
-Setelah menjalankan seeder, Anda bisa menggunakan akun berikut untuk login:
+After running seeders, you can log in using these accounts:
 
--   **Role:** Instructor
--   **Email:** `instructor@skoolio.test` (atau cek email lain di database Anda)
--   **Password:** `password`
+* **Role:** Instructor
+  **Email:** `instructor@School.test` (or check other emails in your database)
+  **Password:** `password`
 
--   **Role:** Admin
--   **Email:** `admin@skoolio.test`
--   **Password:** `password`
+* **Role:** Admin
+  **Email:** `admin@School.test`
+  **Password:** `password`
 
 ---
 
 ## 🧪 Running Tests
 
-Untuk menjalankan suite pengujian otomatis, gunakan perintah berikut:
+To run the automated test suite, use:
 
 ```bash
 php artisan test
