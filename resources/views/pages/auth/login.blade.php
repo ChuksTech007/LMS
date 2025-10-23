@@ -3,68 +3,82 @@
 @section('title', __('auth.login_title'))
 
 @section('content')
-	<div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
-		<div class="sm:mx-auto sm:w-full sm:max-w-md">
-			<h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-				{{ __('auth.login_title') }}
-			</h2>
-		</div>
+<div class="flex min-h-screen flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gradient-to-br from-green-50 to-white px-4">
+    
+    <!-- Logo / Title -->
+    <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-800 shadow-lg animate-bounce">
+            <span class="text-white font-extrabold text-xl">F</span>
+        </div>
+        <h2 class="mt-6 text-3xl font-extrabold tracking-tight text-green-900">
+            {{ __('auth.login_title') }}
+        </h2>
+        <p class="mt-2 text-sm text-gray-600">Sign in to access your FUTO-SkillUP account</p>
+    </div>
 
-		<div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-			<div class="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-				<form class="space-y-6" action="{{ route('login') }}" method="POST">
-					@csrf
+    <!-- Form -->
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white px-6 py-10 shadow-xl rounded-lg border-t-4 border-yellow-500 animate-fadeIn">
+            <form class="space-y-6" action="{{ route('login') }}" method="POST">
+                @csrf
 
-					<div>
-						<label for="email"
-							class="block text-sm font-medium leading-6 text-gray-900">{{ __('auth.email_address') }}</label>
-						<div class="mt-2">
-							<input id="email" name="email" type="email" autocomplete="email" required autofocus
-								class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-						</div>
-						@error('email')
-							<p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-						@enderror
-					</div>
+                <!-- Email -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-800">{{ __('auth.email_address') }}</label>
+                    <input id="email" name="email" type="email" autocomplete="email" required autofocus
+                        class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm px-3 py-2">
+                    @error('email')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
 
-					<div>
-						<label for="password"
-							class="block text-sm font-medium leading-6 text-gray-900">{{ __('auth.password') }}</label>
-						<div class="mt-2">
-							<input id="password" name="password" type="password" autocomplete="current-password" required
-								class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-						</div>
-						@error('password')
-							<p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-						@enderror
-					</div>
+                <!-- Password -->
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-800">{{ __('auth.password') }}</label>
+                    <input id="password" name="password" type="password" autocomplete="current-password" required
+                        class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:outline-none focus:ring-0 focus:border-transparent sm:text-sm px-3 py-2">
+                    @error('password')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
 
-					<div class="flex items-center justify-between">
-						<div class="flex items-center">
-							<input id="remember" name="remember" type="checkbox"
-								class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
-							<label for="remember"
-								class="ml-3 block text-sm leading-6 text-gray-900">{{ __('auth.remember_me') }}</label>
-						</div>
+                <!-- Remember + Forgot -->
+                <div class="flex items-center justify-between text-sm">
+                    <label class="flex items-center">
+                        <input id="remember" name="remember" type="checkbox" class="h-4 w-4 text-green-900 border-gray-300 rounded focus:outline-none focus:ring-0 focus:border-transparent">
+                        <span class="ml-2 text-gray-700">{{ __('auth.remember_me') }}</span>
+                    </label>
+                    <a href="{{ route('password.request') }}" class="text-green-900 font-semibold hover:underline">
+                        {{ __('auth.forgot_password') }}
+                    </a>
+                </div>
 
-						<div class="text-sm leading-6">
-							<a href="{{ route('password.request') }}"
-								class="font-semibold text-indigo-600 hover:text-indigo-500">{{ __('auth.forgot_password') }}</a>
-						</div>
-					</div>
+                <!-- Submit -->
+                <button type="submit"
+                    class="w-full flex justify-center rounded-md bg-green-900 px-4 py-2 text-sm font-semibold text-white shadow-lg hover:bg-green-800 transform hover:scale-[1.02] transition duration-300">
+                    {{ __('auth.login_button') }}
+                </button>
+            </form>
+        </div>
 
-					<div>
-						<button type="submit"
-							class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">{{ __('auth.login_button') }}</button>
-					</div>
-				</form>
-			</div>
+        <!-- Register link -->
+        <p class="mt-6 text-center text-sm text-gray-600">
+            {{ __('auth.dont_have_account') }}
+            <a href="{{ route('register') }}" class="text-yellow-600 font-semibold hover:underline">
+                {{ __('auth.register_here') }}
+            </a>
+        </p>
+    </div>
+</div>
 
-			<p class="mt-10 text-center text-sm text-gray-500">
-				{{ __('auth.dont_have_account') }}
-				<a href="{{ route('register') }}"
-					class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">{{ __('auth.register_here') }}</a>
-			</p>
-		</div>
-	</div>
+<!-- Animations -->
+<style>
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+</style>
 @endsection

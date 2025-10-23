@@ -32,7 +32,7 @@ test('instructor can access the create course page', function () {
     actingAs($this->instructor)
         ->get(route('instructor.courses.create'))
         ->assertOk()
-        ->assertSee('Tambah Kursus Baru');
+        ->assertSee('Add New Course');
 });
 
 test('instructor can create a new course', function () {
@@ -41,8 +41,8 @@ test('instructor can create a new course', function () {
 
     // Action: Simulate submitting the form, now including the 'categories' data
     $response = actingAs($this->instructor)->post(route('instructor.courses.store'), [
-        'title' => 'Kursus Laravel 12 Terbaru',
-        'description' => 'Deskripsi lengkap untuk kursus ini.',
+        'title' => 'Courses Laravel 12 Terbaru',
+        'description' => 'Deskripsi lengkap untuk Courses ini.',
         'price' => 250000,
         'categories' => [$category->id], // This is the required data that was missing
     ]);
@@ -52,8 +52,8 @@ test('instructor can create a new course', function () {
 
     // Assertion 2: Check that the course was created in the database
     $this->assertDatabaseHas('courses', [
-        'title' => 'Kursus Laravel 12 Terbaru',
-        'slug' => 'kursus-laravel-12-terbaru',
+        'title' => 'Courses Laravel 12 Terbaru',
+        'slug' => 'Courses-laravel-12-terbaru',
         'user_id' => $this->instructor->id,
     ]);
 

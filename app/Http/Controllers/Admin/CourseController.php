@@ -19,7 +19,7 @@ class CourseController extends Controller
         $course->is_published = !$course->is_published;
         $course->save();
 
-        $status = $course->is_published ? 'diterbitkan' : 'disembunyikan';
-        return back()->with('success', "Status kursus '{$course->title}' berhasil diubah menjadi {$status}.");
+        $status = $course->is_published ? 'Published' : 'Unpublished';
+        return back()->with('success', "The status for the course '{$course->title}' has been successfully changed to {$status}.");
     }
 }

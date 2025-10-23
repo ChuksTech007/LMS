@@ -8,6 +8,8 @@ use App\View\Composers\NotificationComposer;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use App\Models\Payment;
+use App\Policies\PaymentPolicy;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,4 +28,8 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('layouts.partials.navbar', NotificationComposer::class);
     }
+
+    protected $policies = [
+    Payment::class => PaymentPolicy::class,
+];
 }

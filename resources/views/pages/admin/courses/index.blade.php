@@ -1,64 +1,111 @@
 @extends('layouts.app')
 
-@section('title', 'Manajemen Kursus')
+@section('title', 'Global Course')
 
 @section('content')
-	<div class="py-12">
-		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-			<h2 class="text-2xl font-semibold text-gray-900 mb-6">Manajemen Kursus Global</h2>
+<!-- A consistent background gradient for a premium feel -->
+<div class="py-12 bg-gray-50 min-h-screen px-4">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
 
-			@if (session('success'))
-				{{-- Flash message component --}}
-			@endif
+        {{-- Page Header --}}
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 animate-fade-in-down">
+            <div class="mb-4 sm:mb-0">
+                <h2 class="text-3xl font-extrabold text-green-900">Global Course Management</h2>
+                <a href="{{ route('admin.dashboard') }}"
+                   class="inline-flex items-center text-sm font-semibold text-gray-600 hover:text-gray-800 transition-colors duration-200 mt-1">
+                   &larr; Back to Dashboard
+                </a>
+            </div>
+        </div>
 
-			<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-				<div class="text-gray-900">
-					<table class="min-w-full divide-y divide-gray-300">
-						<thead class="bg-gray-50">
-							<tr>
-								<th class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Judul
-								</th>
-								<th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Pengajar</th>
-								<th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
-								<th class="relative py-3.5 pl-3 pr-4 sm:pr-6"><span class="sr-only">Ubah Status</span></th>
-							</tr>
-						</thead>
-						<tbody class="divide-y divide-gray-200 bg-white">
-							@forelse ($courses as $course)
-								<tr>
-									<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-										{{ $course->title }}</td>
-									<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-										{{ $course->instructor->name }}</td>
-									<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-										@if($course->is_published)
-											<span
-												class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">Published</span>
-										@else
-											<span
-												class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">Unpublished</span>
-										@endif
-									</td>
-									<td
-										class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-										<form action="{{ route('admin.courses.toggleStatus', $course) }}" method="POST">
-											@csrf
-											@method('PATCH')
-											<button type="submit" class="text-indigo-600 hover:text-indigo-900">Ubah
-												Status</button>
-										</form>
-									</td>
-								</tr>
-							@empty
-								<tr>
-									<td colspan="4" class="text-center py-4 text-gray-500">Tidak ada kursus.</td>
-								</tr>
-							@endforelse
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="mt-6">{{ $courses->links() }}</div>
-		</div>
-	</div>
+        @if (session('success'))
+            <div class="mb-6 rounded-2xl bg-green-50 p-4 animate-fade-in-up">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        {{-- Course Table --}}
+        <div class="bg-white overflow-hidden shadow-xl rounded-xl p-6 animate-fade-in-up">
+            <div class="text-gray-900">
+                <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                        <table class="min-w-full divide-y divide-gray-300">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Title
+                                    </th>
+                                    <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Instructor</th>
+                                    <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+                                    <th class="relative py-3.5 pl-3 pr-4 sm:pr-6"><span class="sr-only">Change Status</span></th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 bg-white">
+                                @forelse ($courses as $course)
+                                    <tr>
+                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                            {{ $course->title }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                            {{ $course->instructor->name }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                            @if($course->is_published)
+                                                <span
+                                                    class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">Published</span>
+                                            @else
+                                                <span
+                                                    class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">Unpublished</span>
+                                            @endif
+                                        </td>
+                                        <td
+                                            class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                            <form action="{{ route('admin.courses.toggleStatus', $course) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit"
+                                                        class="text-green-600 hover:text-green-900 transition-colors duration-200">
+                                                    Change Status
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center py-4 text-gray-500">No courses available.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-6 animate-fade-in-up">{{ $courses->links() }}</div>
+    </div>
+</div>
+
+<!-- Custom CSS for animations -->
+<style>
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in-down {
+        animation: fadeInDown 0.8s ease-out forwards;
+    }
+    .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease-out 0.8s forwards; opacity: 0;
+    }
+</style>
 @endsection

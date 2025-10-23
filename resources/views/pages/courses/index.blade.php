@@ -1,88 +1,136 @@
 @extends('layouts.app')
 
-@section('title', 'Katalog Kursus')
+@section('title', 'Course Catalog')
 
 @section('content')
-	<div class="bg-white">
-		<div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-			<h2 class="text-2xl font-bold tracking-tight text-gray-900">Katalog Kursus Skoolio</h2>
+<div class="py-12 bg-gray-50 min-h-screen">
+    <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
 
-			<div class="py-4 border-b border-t border-gray-200 my-6">
-				<div class="flex flex-wrap items-center gap-2">
-					<span class="text-sm font-medium mr-2">Filter Kategori:</span>
-					<a href="{{ route('courses.index') }}"
-						class="rounded-full px-3 py-1 text-sm transition-colors
-					  {{ !request('category') ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-white text-gray-600 hover:bg-gray-100 ring-1 ring-inset ring-gray-300' }}">
-						Semua
-					</a>
-					@foreach ($categories as $category)
-						<a href="{{ route('courses.index', ['category' => $category->slug]) }}"
-							class="rounded-full px-3 py-1 text-sm transition-colors
-							  {{ request('category') == $category->slug ? 'bg-indigo-600 text-white hover:bg-indigo-700' : 'bg-white text-gray-600 hover:bg-gray-100 ring-1 ring-inset ring-gray-300' }}">
-							{{ $category->name }}
-						</a>
-					@endforeach
-				</div>
-			</div>
+        <h2 class="text-3xl font-extrabold tracking-tight text-green-900 mb-8 animate-fadeInDown">
+            🎓 FUTO SkillUP Course Catalog
+        </h2>
 
-			<div class="mt-6 mb-8">
-				<form action="{{ route('courses.index') }}" method="GET">
-					<div class="flex rounded-md shadow-sm">
-						<div class="relative flex flex-grow items-stretch focus-within:z-10">
-							<input type="search" name="search" id="search"
-								class="block w-full rounded-none rounded-l-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
-								placeholder="Cari kursus..." value="{{ request('search') }}">
-						</div>
-						<button type="submit"
-							class="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-							<svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-								<path fill-rule="evenodd"
-									d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-									clip-rule="evenodd" />
-							</svg>
-							Cari
-						</button>
-					</div>
-				</form>
-			</div>
+{{-- Category Filter --}}
+<div class="bg-white rounded-xl shadow-md p-4 mb-8 border border-gray-100 animate-fadeInUp delay-100">
+    <div class="flex flex-nowrap overflow-x-auto gap-2 items-center h-full no-scrollbar pb-1">
+        <span class="text-sm font-semibold mr-2 text-green-900 flex-shrink-0">
+            Filter by Category:
+        </span>
 
-			@if (request('search'))
-				<p class="mb-6 text-sm text-gray-700">
-					Menampilkan hasil pencarian untuk: <span class="font-bold">{{ request('search') }}</span>
-					<a href="{{ route('courses.index') }}" class="ml-2 text-indigo-600 hover:text-indigo-800 text-xs">[Hapus
-						Filter]</a>
-				</p>
-			@endif
+        <a href="{{ route('courses.index') }}"
+           class="rounded-full px-3 py-1 text-sm font-medium transition-all duration-300 transform hover:scale-105 flex-shrink-0
+           {{ !request('category') ? 'bg-green-900 text-white shadow-md hover:bg-yellow-400 hover:text-green-900' : 'bg-white text-gray-600 hover:bg-gray-100 ring-1 ring-gray-300' }}">
+            All
+        </a>
 
-			<div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-				@forelse ($courses as $course)
-					<div class="group relative">
-						<div
-							class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-							<img src="{{ asset('storage/' . $course->thumbnail) }}" alt="{{ $course->title }}"
-								class="h-full w-full object-cover object-center lg:h-full lg:w-full">
-						</div>
-						<div class="mt-4 flex justify-between">
-							<div>
-								<h3 class="text-sm text-gray-700">
-									<a href="{{ route('courses.show', $course) }}">
-										<span aria-hidden="true" class="absolute inset-0"></span>
-										{{ $course->title }}
-									</a>
-								</h3>
-								<p class="mt-1 text-sm text-gray-500">Oleh {{ $course->instructor->name }}</p>
-							</div>
-							<p class="text-sm font-medium text-gray-900">Rp {{ number_format($course->price, 0, ',', '.') }}</p>
-						</div>
-					</div>
-				@empty
-					<p class="col-span-3 text-center text-gray-500">Belum ada kursus yang tersedia saat ini.</p>
-				@endforelse
-			</div>
+        @foreach ($categories as $category)
+            <a href="{{ route('courses.index', ['category' => $category->slug]) }}"
+               class="rounded-full px-3 py-1 text-sm font-medium transition-all duration-300 transform hover:scale-105 flex-shrink-0
+               {{ request('category') == $category->slug ? 'bg-green-900 text-white shadow-md hover:bg-yellow-400 hover:text-green-900' : 'bg-white text-gray-600 hover:bg-gray-100 ring-1 ring-gray-300' }}">
+                {{ $category->name }}
+            </a>
+        @endforeach
+    </div>
+</div>
 
-			<div class="mt-12">
-				{{ $courses->appends(request()->query())->links() }}
-			</div>
-		</div>
-	</div>
+<style>
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+
+
+
+        {{-- Search Bar --}}
+        <div class="mb-8 animate-fadeInUp delay-200">
+            <form action="{{ route('courses.index') }}" method="GET">
+                <div class="flex rounded-lg shadow-sm overflow-hidden border border-gray-100">
+                    <input type="search" name="search" id="search"
+                               class="flex-grow border-0 py-3 px-4 text-gray-900 placeholder:text-gray-400 
+                               focus:ring-2 focus:ring-yellow-400 focus:outline-none transition-all duration-300"
+                               placeholder="🔍 Search courses..." value="{{ request('search') }}">
+                    <button type="submit"
+                                 class="inline-flex items-center gap-x-1.5 px-6 py-3 text-sm font-semibold text-green-900 bg-yellow-400 hover:bg-yellow-300 
+                                 transition-all duration-300 transform hover:scale-105">
+                        Search
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        {{-- Search Result Info --}}
+        @if (request('search'))
+            <p class="mb-6 text-sm text-gray-700 animate-fadeInUp delay-300">
+                Showing results for: <span class="font-bold">{{ request('search') }}</span>
+                <a href="{{ route('courses.index') }}" class="ml-2 text-green-900 hover:text-yellow-400 text-xs transition-colors">[Clear Filter]</a>
+            </p>
+        @endif
+
+        {{-- Courses Grid --}}
+        <div class="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+            @forelse ($courses as $course)
+                <div class="bg-white overflow-hidden rounded-xl shadow-lg border border-gray-100 flex flex-col transform transition duration-500 hover:scale-[1.02] hover:shadow-2xl animate-fadeInUp delay-{{ $loop->index * 100 }}">
+                    <img src="{{ asset('/' . $course->thumbnail) }}" alt="{{ $course->title }}"
+                         class="h-48 w-full object-cover object-center transform group-hover:scale-105 transition-transform duration-500 ease-out">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="font-bold text-xl text-gray-900">{{ $course->title }}</h3>
+                        <p class="mt-2 text-sm text-gray-500">By {{ $course->instructor->name }}</p>
+                    </div>
+                    <div class="p-6 pt-0 flex justify-between items-center mt-auto">
+                        <p class="text-lg font-bold text-green-900">₦ {{ number_format($course->price, 0, ',', '.') }}</p>
+                        <a href="{{ route('courses.show', $course) }}"
+                           class="inline-flex items-center rounded-lg bg-green-900 px-4 py-2 text-sm font-semibold text-white shadow-md hover:bg-green-800 transition-all duration-300 transform hover:scale-105">
+                            View Course
+                        </a>
+                    </div>
+                </div>
+            @empty
+                <div class="col-span-1 sm:col-span-2 lg:col-span-3 text-center py-20 bg-white rounded-xl shadow-md border border-gray-100 animate-fadeInUp">
+                    <p class="text-xl text-gray-500 font-medium">🚫 No courses available right now.</p>
+                </div>
+            @endforelse
+        </div>
+
+        {{-- Pagination --}}
+        <div class="mt-12 text-center">
+            {{ $courses->appends(request()->query())->links() }}
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.animate-fadeInUp {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+.animate-fadeInDown {
+    animation: fadeInDown 0.6s ease-out forwards;
+}
+/* Staggered animation delays for each card */
+.delay-0 { animation-delay: 0s; }
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+</style>
 @endsection

@@ -23,21 +23,21 @@ class DatabaseSeeder extends Seeder
         // 1. Create Default Users
         $this->command->info('Creating default users...');
         $admin = User::factory()->create([
-            'name' => 'Admin Skoolio',
+            'name' => 'Admin School',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
             'role' => Role::ADMIN,
         ]);
 
         $instructor = User::factory()->create([
-            'name' => 'Instructor Skoolio',
+            'name' => 'Instructor School',
             'email' => 'inst@gmail.com',
             'password' => Hash::make('password'),
             'role' => Role::INSTRUCTOR,
         ]);
 
         $student = User::factory()->create([
-            'name' => 'student Skoolio',
+            'name' => 'student School',
             'email' => 'stud@gmail.com',
             'password' => Hash::make('password'),
             'role' => Role::INSTRUCTOR,

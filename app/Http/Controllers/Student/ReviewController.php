@@ -25,6 +25,6 @@ class ReviewController extends Controller
             ]
         );
 
-        return back()->with('success', 'Terima kasih, ulasan Anda berhasil disimpan!');
+        return back()->with('success', 'Thank you, your review has been saved successfully!');
     }
 }

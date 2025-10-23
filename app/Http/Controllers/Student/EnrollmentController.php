@@ -24,6 +24,6 @@ class EnrollmentController extends Controller
         }
 
         return redirect()->route('courses.show', $course)
-            ->with('success', 'Selamat, Anda berhasil terdaftar di kursus ini!');
+            ->with('success', 'Congratulations, you have successfully enrolled in this course!');
     }
 }

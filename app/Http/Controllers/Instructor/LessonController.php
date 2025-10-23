@@ -41,7 +41,7 @@ class LessonController extends Controller
         $course->lessons()->create($validated);
 
         return redirect()->route('instructor.courses.lessons.index', $course)
-            ->with('success', 'Pelajaran berhasil ditambahkan!');
+            ->with('success', 'Lesson added successfully!');
     }
 
     /**
@@ -63,7 +63,7 @@ class LessonController extends Controller
         $lesson->update($validated);
 
         return redirect()->route('instructor.courses.lessons.index', $course)
-            ->with('success', 'Pelajaran berhasil diperbarui!');
+            ->with('success', 'Lesson updated successfully!');
     }
 
     /**
@@ -74,6 +74,6 @@ class LessonController extends Controller
         $lesson->delete();
 
         return redirect()->route('instructor.courses.lessons.index', $course)
-            ->with('success', 'Pelajaran berhasil dihapus!');
+            ->with('success', 'Lesson deleted successfully!');
     }
 }

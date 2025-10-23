@@ -35,6 +35,6 @@ class LearningController extends Controller
             $user->completedLessons()->attach($lesson->id);
         }
 
-        return back()->with('success', 'Pelajaran ditandai selesai!');
+        return back()->with('success', 'Lesson marked as completed!');
     }
 }

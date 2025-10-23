@@ -12,7 +12,7 @@ class PruneOldNotifications extends Command
      *
      * @var string
      */
-    protected $signature = 'skoolio:prune-notifications';
+    protected $signature = 'School:prune-notifications';
 
     /**
      * The console command description.

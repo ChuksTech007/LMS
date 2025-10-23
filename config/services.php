@@ -13,6 +13,11 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
+    'google' => [
+        'client id' => env(key: 'GOOGLE CLIENT ID'),
+        'client secret' => env(key: 'GOOGLE CLIENT SECRET'),
+        'redirect' => env(key: 'GOOGLE REDIRECT URI'),
+    ],
 
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
@@ -34,5 +39,11 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+
+    'bbb' => [
+        'url' => env('BBB_SERVER_URL'),
+        'secret' => env('BBB_SECRET'),
+    ],
+
 
 ];

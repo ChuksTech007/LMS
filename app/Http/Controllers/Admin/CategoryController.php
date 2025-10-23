@@ -29,7 +29,7 @@ class CategoryController extends Controller
         $validated['slug'] = Str::slug($validated['name']);
 
         Category::create($validated);
-        return redirect()->route('admin.categories.index')->with('success', 'Kategori baru berhasil dibuat.');
+        return redirect()->route('admin.categories.index')->with('success', 'New category has been successfully created.');
     }
 
     public function edit(Category $category)
@@ -45,17 +45,17 @@ class CategoryController extends Controller
         $validated['slug'] = Str::slug($validated['name']);
 
         $category->update($validated);
-        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil diperbarui.');
+        return redirect()->route('admin.categories.index')->with('success', 'The category was successfully updated.');
     }
 
     public function destroy(Category $category)
     {
         // Add check if category is in use before deleting
         if ($category->courses()->exists()) {
-            return back()->withErrors(['error' => 'Kategori ini tidak bisa dihapus karena sedang digunakan oleh kursus.']);
+            return back()->withErrors(['error' => 'This category cannot be deleted because it is currently being used by a course.']);
         }
 
         $category->delete();
-        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dihapus.');
+        return redirect()->route('admin.categories.index')->with('success', 'The category was successfully deleted.');
     }
 }

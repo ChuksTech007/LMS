@@ -9,5 +9,5 @@ test('the homepage is accessible and displays correct content', function () {
     $response->assertStatus(200);
 
     // 3. Assertion: Check if the page contains a specific, key text.
-    $response->assertSee('Tingkatkan Skill Anda Bersama Skoolio');
+    $response->assertSee('Tingkatkan Skill Anda Bersama School');
 });

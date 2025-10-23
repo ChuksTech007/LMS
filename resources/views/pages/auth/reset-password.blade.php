@@ -36,7 +36,7 @@
 
 					<div>
 						<button type="submit"
-							class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm text-white">Reset
+							class="flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm text-white">Reset
 							Password</button>
 					</div>
 				</form>

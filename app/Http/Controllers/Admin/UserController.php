@@ -37,6 +37,6 @@ class UserController extends Controller
         $user->role = $request->role;
         $user->save();
 
-        return back()->with('success', "Peran untuk user {$user->name} berhasil diperbarui.");
+        return back()->with('success', "The role for user {$user->name} has been successfully updated.");
     }
 }

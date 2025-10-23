@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -12,35 +11,19 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -82,4 +65,33 @@ class User extends Authenticatable
         return $this->hasMany(Review::class);
     }
 
+    /**
+     * Get the payments made by the user.
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Check if user has paid for a specific course.
+     */
+    public function hasPaidForCourse(Course $course): bool
+    {
+        return $this->payments()
+            ->where('course_id', $course->id)
+            ->where('status', 'verified')
+            ->exists();
+    }
+
+    /**
+     * Get pending payment for a course.
+     */
+    public function getPendingPaymentForCourse(Course $course)
+    {
+        return $this->payments()
+            ->where('course_id', $course->id)
+            ->where('status', 'pending')
+            ->first();
+    }
 }

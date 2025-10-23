@@ -20,7 +20,7 @@ class EnsureUserIsEnrolled
 
         // Check if the user is authenticated and is enrolled in the course.
         if (!$request->user() || !$request->user()->enrolledCourses->contains($course)) {
-            abort(403, 'AKSES DITOLAK.');
+            abort(403, 'ACCESS DENIED.');
         }
 
         return $next($request);

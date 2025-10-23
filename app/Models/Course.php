@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Course extends Model
 {
@@ -26,14 +27,22 @@ class Course extends Model
     {
         return [
             'is_published' => 'boolean',
+            'price' => 'decimal:2',
         ];
     }
 
-
     /**
-     * Get the user that owns the course.
+     * Get the instructor that owns the course (Explicit name).
      */
     public function instructor(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    
+    /**
+     * Get the user that owns the course (Standard Laravel convention).
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -47,8 +56,21 @@ class Course extends Model
     }
 
     /**
-     * The students that are enrolled in the course.
+     * Get the single quiz for the course.
      */
+    public function quiz(): HasOne
+    {
+        return $this->hasOne(Quiz::class)->where('status', 0);
+    }
+
+    /**
+     * Get all quizzes for the course (Current and Past).
+     */
+    public function quizzes(): HasMany
+    {
+        return $this->hasMany(Quiz::class);
+    }
+
     public function students(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'course_user');
@@ -73,7 +95,7 @@ class Course extends Model
     }
 
     /**
-     * Summary of reviews
+     * Get reviews for the course.
      */
     public function reviews(): HasMany
     {
@@ -86,5 +108,32 @@ class Course extends Model
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    /**
+     * Get live sessions for the course.
+     */
+    public function liveSessions(): HasMany
+    {
+        return $this->hasMany(LiveSession::class);
+    }
+
+    /**
+     * Get payments for the course.
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Check if a user has paid for this course.
+     */
+    public function isPaidBy(User $user): bool
+    {
+        return $this->payments()
+            ->where('user_id', $user->id)
+            ->where('status', 'verified')
+            ->exists();
     }
 }

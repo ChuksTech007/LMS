@@ -7,4 +7,4 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::command('skoolio:prune-notifications')->daily();
+Schedule::command('School:prune-notifications')->daily();

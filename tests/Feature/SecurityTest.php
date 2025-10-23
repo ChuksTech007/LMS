@@ -59,7 +59,7 @@ test('users can authenticate using the login screen', function () {
     $this->assertAuthenticated();
 
     // Assertion: Check that the user was redirected to the homepage
-    $response->assertRedirect('/my-dashboard');
+    $response->assertRedirect('/dashboard');
 });
 
 test('users cannot authenticate with an invalid password', function () {
