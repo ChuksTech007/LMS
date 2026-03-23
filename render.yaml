@@ -1,11 +1,17 @@
+databases:
+  - name: futolms-db
+    plan: free
+    databaseName: futolms
+    user: futolms
+
 services:
   - type: web
     name: futolms
     runtime: docker
     dockerfilePath: ./Dockerfile
-    plan: free          # change to "starter" or higher for always-on
+    plan: free
     healthCheckPath: /
-    autoDeploy: true    # auto-deploy on every push to the connected branch
+    autoDeploy: true
 
     envVars:
       - key: APP_NAME
@@ -17,27 +23,34 @@ services:
       - key: APP_URL
         value: https://futolms.onrender.com
 
-      # Generate a secure APP_KEY once and paste it here,
-      # or set it manually in the Render dashboard.
-      # Run locally: php artisan key:generate --show
+      # Generate with: php artisan key:generate --show
       - key: APP_KEY
-        sync: false   # marks this as a secret you must set in the dashboard
+        sync: false
 
-      # Database — set these in the Render dashboard (never commit real values)
+      # PostgreSQL — Render auto-provides these when you link the DB above
       - key: DB_CONNECTION
-        value: mysql
+        value: pgsql
       - key: DB_HOST
-        sync: false
+        fromDatabase:
+          name: futolms-db
+          property: host
       - key: DB_PORT
-        value: "3306"
+        fromDatabase:
+          name: futolms-db
+          property: port
       - key: DB_DATABASE
-        sync: false
+        fromDatabase:
+          name: futolms-db
+          property: database
       - key: DB_USERNAME
-        sync: false
+        fromDatabase:
+          name: futolms-db
+          property: user
       - key: DB_PASSWORD
-        sync: false
+        fromDatabase:
+          name: futolms-db
+          property: password
 
-      # Session / Cache / Queue (use file/database drivers — no Redis needed)
       - key: SESSION_DRIVER
         value: database
       - key: CACHE_STORE
@@ -46,14 +59,11 @@ services:
         value: database
       - key: FILESYSTEM_DISK
         value: local
-
-      # Logging (stream to stderr so Render captures it)
       - key: LOG_CHANNEL
         value: stderr
       - key: LOG_LEVEL
         value: error
 
-      # Google OAuth (set in dashboard)
       - key: GOOGLE_CLIENT_ID
         sync: false
       - key: GOOGLE_CLIENT_SECRET
@@ -61,6 +71,5 @@ services:
       - key: GOOGLE_REDIRECT_URI
         value: https://futolms.onrender.com/auth/google/callback
 
-      # Mail (set in dashboard if using real SMTP)
       - key: MAIL_MAILER
         value: log

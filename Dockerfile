@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
-    && docker-php-ext-install pdo pdo_mysql gd mbstring xml fileinfo bcmath \
+    libpq-dev \
+    && docker-php-ext-install pdo pdo_mysql pdo_pgsql pgsql gd mbstring xml fileinfo bcmath \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
 
