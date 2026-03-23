@@ -1,34 +1,8 @@
-# # FROM php:apache
-# # FROM php:7.4-apache
-# FROM php:8.2.12-apache
-
-# WORKDIR /var/www/html
-
-# # Copy your PHP application code into the container
-# COPY . .
-
-# # Install PHP extensions and other dependencies
-# RUN apt-get update && \
-#     apt-get install -y libpng-dev && \
-#     docker-php-ext-install pdo pdo_mysql gd
-
-
-# RUN docker-php-ext-install mysqli
-# RUN a2enmod rewrite
-
-
-# # Expose the port Apache listens on
-# EXPOSE 80
-
-# # Start Apache when the container runs
-# # CMD ["apache2-foreground"]
-
-
 FROM php:8.2.12-apache
 
 WORKDIR /var/www/html
 
-# Install dependencies
+# Install system dependencies + Node.js 20
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -37,33 +11,57 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
     && docker-php-ext-install pdo pdo_mysql gd mbstring xml fileinfo bcmath \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
 
+# Install pnpm
+RUN npm install -g pnpm
+
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy application files
+# Copy dependency manifests first (better Docker layer caching)
+COPY composer.json composer.lock ./
+COPY package.json pnpm-lock.yaml* package-lock.json* ./
+
+# Install Node dependencies and build frontend assets
+COPY resources/ ./resources/
+COPY vite.config.js tailwind.config.js postcss.config.js* ./
+RUN pnpm install --frozen-lockfile || npm install
+RUN pnpm run build || npm run build
+
+# Copy the rest of the application
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Install PHP dependencies (no dev, optimised autoloader)
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Set up Apache VirtualHost for Laravel public directory
+# Set Apache VirtualHost to serve from /public on port 8080
 RUN echo '<VirtualHost *:8080>\n\
     DocumentRoot /var/www/html/public\n\
     <Directory /var/www/html/public>\n\
         AllowOverride All\n\
         Require all granted\n\
+        Options -Indexes\n\
     </Directory>\n\
+    ErrorLog ${APACHE_LOG_DIR}/error.log\n\
+    CustomLog ${APACHE_LOG_DIR}/access.log combined\n\
 </VirtualHost>' > /etc/apache2/sites-available/000-default.conf
 
-# Expose port 8080 (Render will map PORT env var)
+# Update Apache to listen on 8080
+RUN sed -i 's/Listen 80/Listen 8080/g' /etc/apache2/ports.conf
+
+# Set correct permissions for Laravel writable directories
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Create startup script: link storage, run migrations, then start Apache
+RUN printf '#!/bin/bash\nset -e\n\nphp artisan storage:link --force\nphp artisan migrate --force\nphp artisan config:cache\nphp artisan route:cache\nphp artisan view:cache\n\nexec apache2-foreground\n' > /start.sh \
+    && chmod +x /start.sh
+
 EXPOSE 8080
 
-# Use PORT environment variable if set, otherwise default to 8080
-ENV APACHE_RUN_PORT=8080
-RUN sed -i 's/Listen 80/Listen ${APACHE_RUN_PORT}/g' /etc/apache2/ports.conf
-
-CMD ["apache2-foreground"]
+CMD ["/start.sh"]
