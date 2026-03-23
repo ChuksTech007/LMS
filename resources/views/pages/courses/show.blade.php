@@ -165,10 +165,14 @@
                     </div>
                 </div>
 
-                <a href="{{ route('student.dashboard') }}"
-                    class="inline-flex items-center text-sm font-semibold text-gray-600 hover:text-gray-800 transition-colors duration-200 mt-8">
-                    &larr; Back to Dashboard
-                </a>
+                @auth
+                    @if(auth()->user()->role->value === 'student')
+                        <a href="{{ route('student.dashboard') }}"
+                            class="inline-flex items-center text-sm font-semibold text-gray-600 hover:text-gray-800 transition-colors duration-200 mt-8">
+                            &larr; Back to Dashboard
+                        </a>
+                    @endif
+                @endauth
 
             </div>
 

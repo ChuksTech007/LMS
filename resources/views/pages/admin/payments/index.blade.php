@@ -6,6 +6,11 @@
 <div class="py-12 bg-gray-50 min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
+        <a href="{{ route('admin.dashboard') }}"
+            class="inline-flex items-center text-sm font-semibold text-gray-600 hover:text-gray-800 transition-colors duration-200 mt-1 mb-2">
+            &larr; Back to Dashboard
+        </a>
+
         <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
             <h1 class="text-3xl font-bold text-gray-900">Payment Management</h1>
             <p class="mt-2 text-gray-600">Review and verify student payments</p>

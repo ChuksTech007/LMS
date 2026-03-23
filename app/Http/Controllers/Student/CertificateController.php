@@ -22,9 +22,9 @@ class CertificateController extends Controller
     public function download(QuizAttempt $attempt)
     {
         // Authorization: Ensure the user owns this attempt
-        // if ($attempt->user_id !== auth()->id()) {
-        //     abort(403, 'Unauthorized access to certificate.');
-        // }
+        if ($attempt->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access to certificate.');
+        }
 
         // Ensure the attempt is completed and passed
         if (!$attempt->passed) {
@@ -50,9 +50,9 @@ class CertificateController extends Controller
     public function view(QuizAttempt $attempt)
     {
         // Authorization
-        // if ($attempt->user_id !== auth()->id()) {
-        //     abort(403, 'Unauthorized access to certificate.');
-        // }
+        if ($attempt->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access to certificate.');
+        }
 
         // Ensure passed
         if (!$attempt->passed) {

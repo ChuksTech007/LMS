@@ -15,11 +15,7 @@
         </div>
 
         {{-- Pending Payments Alert --}}
-        @php
-            $pendingPaymentsCount = \App\Models\Payment::where('status', 'pending')->count();
-        @endphp
-
-        @if($pendingPaymentsCount > 0)
+        @if($stats['pending_payments'] > 0)
             <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg animate-fade-in-down">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
@@ -28,7 +24,7 @@
                         </svg>
                         <div>
                             <h3 class="text-lg font-semibold text-yellow-900">
-                                {{ $pendingPaymentsCount }} Payment{{ $pendingPaymentsCount > 1 ? 's' : '' }} Awaiting Verification
+                                {{ $stats['pending_payments'] }} Payment{{ $stats['pending_payments'] > 1 ? 's' : '' }} Awaiting Verification
                             </h3>
                             <p class="text-yellow-700">Review and verify student payments to enroll them in courses.</p>
                         </div>
@@ -117,7 +113,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="text-4xl font-extrabold text-green-900">{{ $pendingPaymentsCount }}</div>
+                    <div class="text-4xl font-extrabold text-green-900">{{ $stats['pending_payments'] }}</div>
                 </div>
             </div>
 
@@ -132,7 +128,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="text-4xl font-extrabold text-green-900">{{ \App\Models\Payment::where('status', 'verified')->count() }}</div>
+                    <div class="text-4xl font-extrabold text-green-900">{{ $stats['verified_payments'] }}</div>
                 </div>
             </div>
 
@@ -148,7 +144,7 @@
                         </div>
                     </div>
                     <div class="text-4xl font-extrabold text-green-900">
-                        ₦{{ number_format(\App\Models\Payment::where('status', 'verified')->sum('amount'), 2) }}
+                        &#8358;{{ number_format($stats['total_revenue'], 2) }}
                     </div>
                 </div>
             </div>
@@ -178,8 +174,8 @@
                    class="rounded-md bg-yellow-400 px-6 py-3 text-sm font-semibold text-green-900 shadow-md
                           hover:bg-yellow-500 hover:scale-[1.05] transition-all duration-200 ease-in-out">
                     Manage Payments
-                    @if($pendingPaymentsCount > 0)
-                        <span class="ml-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs">{{ $pendingPaymentsCount }}</span>
+                    @if($stats['pending_payments'] > 0)
+                        <span class="ml-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs">{{ $stats['pending_payments'] }}</span>
                     @endif
                 </a>
             </div>

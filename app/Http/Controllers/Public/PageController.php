@@ -14,7 +14,19 @@ class PageController extends Controller
      */
     public function home()
     {
-        return view("pages.home");
+        $featuredCourses = Course::where('is_published', true)
+            ->with(['instructor', 'categories', 'reviews'])
+            ->latest()
+            ->take(6)
+            ->get();
+
+        $stats = [
+            'courses'  => Course::where('is_published', true)->count(),
+            'students' => \App\Models\User::where('role', 'student')->count(),
+            'instructors' => \App\Models\User::where('role', 'instructor')->count(),
+        ];
+
+        return view("pages.home", compact('featuredCourses', 'stats'));
     }
 
     /**
